@@ -1,0 +1,23 @@
+{
+  "name": "flow-keypress",
+  "version": "0.1.0",
+  "description": "Emit Flow events on key press",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/danandrei/flow-keypress.git"
+  },
+  "keywords": [
+    "flow",
+    "jillix"
+  ],
+  "author": "danandrei",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/danandrei/flow-keypress/issues"
+  },
+  "homepage": "https://github.com/danandrei/flow-keypress#readme"
+}
