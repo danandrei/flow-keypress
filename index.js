@@ -38,7 +38,7 @@ exports.init = (scope, inst, args, data, next) => {
                 return;
             }
 
-            scope.flow(handler.eventName).write({});
+            scope.flow(handler.eventName).write({ event: e });
         }
     });
 
