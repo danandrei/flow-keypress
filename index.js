@@ -4,14 +4,17 @@
 
 /*
  *
- * initialize instance
+ * initialize a new state
  * @name init
- *
+ * @param {Object} args.events
+ * @param {Int} args.events.$eventName.$.keyCode
+ * @param {Boolean} args.events.$eventName.$.shift
+ * @param {Boolean} args.events.$eventName.$.ctrl
  */
-exports.init = (scope, inst, args, data, next) => {
+exports.init = (scope, state, args, data, next) => {
 
     let events = args.events || {};
-    inst.handlers = {};
+    state.handlers = {};
 
     // assing an event name for each of the key codes configured
     Object.keys(events).forEach(eventName => {
@@ -19,7 +22,7 @@ exports.init = (scope, inst, args, data, next) => {
 
             if (!handler.keyCode) return;
 
-            inst.handlers[handler.keyCode] = {
+            state.handlers[handler.keyCode] = {
                 eventName: eventName,
                 ctrl: handler.ctrl || false,
                 shift: handler.shift || false
@@ -29,7 +32,7 @@ exports.init = (scope, inst, args, data, next) => {
 
     // listen for key presses
     window.addEventListener('keydown', e => {
-        let handler = inst.handlers[e.keyCode];
+        let handler = state.handlers[e.keyCode];
 
         if (handler) {
 
