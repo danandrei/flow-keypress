@@ -1,23 +1,16 @@
 'use strict';
 
 // Dependencies
+const Events = require('events');
 
-/*
- *
- * initialize a new state
- * @name init
- * @param {Object} args.events
- * @param {Int} args.events.$eventName.$.keyCode
- * @param {Boolean} args.events.$eventName.$.shift
- * @param {Boolean} args.events.$eventName.$.ctrl
- */
-exports.init = (scope, state, args, data, next) => {
+function FlowKeypress (args) {
+    let self = new Events();
 
+    args = args || {};
     let events = args.events || {};
-    state.handlers = {};
 
-    // default keypress context
-    state.context = 'graph';
+    self.handlers = {};
+    self.context = args.defaultContext || '_no_context_';
 
     // assing an event name for each of the key codes configured
     Object.keys(events).forEach(eventName => {
@@ -26,9 +19,9 @@ exports.init = (scope, state, args, data, next) => {
             if (!handler.keyCode) return;
 
             let context = handler.context || '_no_context_';
-            state.handlers[context] = state.handlers[context] || {};
+            self.handlers[context] = self.handlers[context] || {};
 
-            state.handlers[context][handler.keyCode] = {
+            self.handlers[context][handler.keyCode] = {
                 eventName: eventName,
                 ctrl: handler.ctrl || false,
                 shift: handler.shift || false
@@ -39,11 +32,11 @@ exports.init = (scope, state, args, data, next) => {
     // listen for key presses
     window.addEventListener('keydown', e => {
 
-        if (!state.handlers[state.context]) { // context must exist
+        if (!self.handlers[self.context]) { // context must exist
             return;
         }
 
-        let handler = state.handlers[state.context][e.keyCode];
+        let handler = self.handlers[self.context][e.keyCode];
 
         if (handler) { // handler must exist
 
@@ -52,33 +45,15 @@ exports.init = (scope, state, args, data, next) => {
                 return;
             }
 
-            scope.flow(handler.eventName).write({ event: e });
+            self.emit(handler.eventName, { event: e });
         }
     });
 
-    next(null, data);
-};
-
-/*
- *
- * changes state context
- * @name set
- * @param {String} args.context
- * @param {String} data.context
- */
-exports.setContext = (scope, state, args, data, next) => {
-
-    let context = args.context || data.context;
-
-    if (!context) {
-        return next(null, data);
+    self.setContext = (context) => {
+        self.context = context;
     }
 
-    if (!state.handlers[context]) {
-        return next(new Error('Flow-keypress.setContext: Context does not exist'));
-    }
+    return self;
+}
 
-    state.context = context;
-
-    next(null, data);
-};
+module.exports = FlowKeypress;

@@ -1,8 +1,4 @@
 {
-  "@id": "https://raw.githubusercontent.com/danandrei/flow-keypress/module-descriptor/package.json",
-  "@context": [
-    "http://schema.jillix.net/context/module.jsonld"
-  ],
   "name": "flow-keypress",
   "version": "0.1.0",
   "description": "Emit Flow events on key press",
@@ -23,29 +19,5 @@
   "bugs": {
     "url": "https://github.com/danandrei/flow-keypress/issues"
   },
-  "homepage": "https://github.com/danandrei/flow-keypress#readme",
-  "exports": [
-    {
-      "name": "init",
-      "description": "initializes a new state",
-      "sets": {
-        "state": [
-          "handlers",
-          "handlers.$keyCode",
-          "handlers.$keyCode.eventName",
-          "handlers.$keyCode.ctrl",
-          "handlers.$keyCode.shift"
-        ]
-      },
-      "needs": {
-        "args": [
-          "events",
-          "events.$eventName",
-          "events.$eventName.$.keyCode",
-          "events.$eventName.$.ctrl",
-          "events.$eventName.$.shift"
-        ]
-      }
-    }
-  ]
+  "homepage": "https://github.com/danandrei/flow-keypress#readme"
 }
