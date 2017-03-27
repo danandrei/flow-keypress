@@ -45,7 +45,10 @@ function FlowKeypress (args) {
                 return;
             }
 
-            self.emit(handler.eventName, { event: e });
+            self.emit('keyEvent', {
+                name: handler.eventName,
+                data: e
+            });
         }
     });
 
